@@ -1,0 +1,35 @@
+.shead {
+  margin-bottom: clamp(48px, 7vw, 96px);
+}
+
+.shead__label {
+  margin-bottom: 28px;
+}
+
+.shead__index {
+  color: var(--text);
+}
+
+.shead__rule {
+  width: 40px;
+  height: 1px;
+  background: var(--metal);
+  opacity: 0.6;
+}
+
+.shead__row {
+  display: grid;
+  gap: 24px;
+}
+
+.shead__aside {
+  max-width: 420px;
+}
+
+@media (min-width: 1024px) {
+  .shead__row {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 64px;
+  }
+}

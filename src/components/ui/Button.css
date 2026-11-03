@@ -1,0 +1,96 @@
+.btn {
+  --btn-bg: var(--text);
+  --btn-fg: var(--bg);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 52px;
+  padding: 0 26px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--btn-fg);
+  background: var(--btn-bg);
+  border: 1px solid var(--btn-bg);
+  border-radius: 2px;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.5s var(--ease), background-color 0.4s var(--ease), color 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+
+/* Specular sweep — like a studio light passing over paint */
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.55) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.9s var(--ease);
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--text);
+  border-color: var(--line-strong);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.btn--ghost::after {
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.12) 50%, transparent 70%);
+}
+
+.btn__arrow {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.btn__arrow svg {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.5s var(--ease);
+}
+
+.btn__arrow svg:last-child {
+  transform: translateX(-140%);
+}
+
+@media (hover: hover) {
+  .btn:hover::after {
+    transform: translateX(120%);
+  }
+
+  .btn--primary:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .btn--ghost:hover {
+    border-color: var(--metal);
+  }
+
+  .btn:hover .btn__arrow svg:first-child {
+    transform: translateX(140%);
+  }
+
+  .btn:hover .btn__arrow svg:last-child {
+    transform: translateX(0);
+  }
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn:disabled {
+  cursor: progress;
+  opacity: 0.8;
+}

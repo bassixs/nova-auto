@@ -1,0 +1,54 @@
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: var(--bg);
+  clip-path: inset(0% 0% 0% 0%);
+}
+
+.preloader__mark {
+  display: flex;
+  font-size: clamp(56px, 14vw, 160px);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+
+.preloader__char {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+}
+
+.preloader__char > span {
+  display: block;
+  background: var(--metal-text);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.preloader__tag {
+  color: var(--metal);
+}
+
+.preloader__bar {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: calc(40px + var(--safe-bottom));
+  height: 1px;
+  background: var(--line);
+}
+
+.preloader__bar-fill {
+  height: 100%;
+  background: var(--accent);
+  transform-origin: left center;
+}

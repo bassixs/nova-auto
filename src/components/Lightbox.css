@@ -1,0 +1,94 @@
+.lb {
+  position: fixed;
+  inset: 0;
+  z-index: 600;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: rgba(6, 7, 8, 0.97);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.lb__top,
+.lb__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 72px;
+}
+
+.lb__bottom {
+  padding-bottom: var(--safe-bottom);
+}
+
+.lb__count {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.lb__count span {
+  color: var(--metal);
+}
+
+.lb__stage {
+  position: relative;
+  overflow: hidden;
+}
+
+.lb__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding-inline: var(--gutter);
+  object-fit: contain;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.lb__img:active {
+  cursor: grabbing;
+}
+
+.lb__caption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 14px;
+}
+
+.lb__caption .mono {
+  color: var(--metal);
+}
+
+.lb__nav {
+  display: flex;
+  gap: 8px;
+}
+
+.lb__btn {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--line-strong);
+  transition: background-color 0.4s var(--ease), color 0.4s var(--ease), border-color 0.4s;
+}
+
+.lb__btn:hover {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+
+.lb__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: var(--accent);
+  transform-origin: left center;
+}

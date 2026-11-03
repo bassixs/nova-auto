@@ -1,0 +1,170 @@
+.hero {
+  --spot-x: 70%;
+  --spot-y: 40%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero__media {
+  position: absolute;
+  inset: -2% 0 0;
+  z-index: -3;
+  will-change: transform;
+}
+
+.hero__zoom,
+.hero__img {
+  width: 100%;
+  height: 100%;
+}
+
+.hero__img {
+  object-fit: cover;
+  object-position: 62% 55%;
+}
+
+.hero__shade {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(180deg, rgba(8, 9, 11, 0.55) 0%, rgba(8, 9, 11, 0) 22%),
+    linear-gradient(0deg, rgba(8, 9, 11, 1) 0%, rgba(8, 9, 11, 0.86) 26%, rgba(8, 9, 11, 0.2) 62%, rgba(8, 9, 11, 0.15) 100%),
+    linear-gradient(90deg, rgba(8, 9, 11, 0.6) 0%, rgba(8, 9, 11, 0) 55%);
+}
+
+/* A soft studio light that follows the cursor across the paint */
+.hero__spot {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(520px circle at var(--spot-x) var(--spot-y), rgba(199, 205, 213, 0.16), transparent 65%);
+  mix-blend-mode: overlay;
+  opacity: 0;
+  transition: opacity 0.8s var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero:hover .hero__spot {
+    opacity: 1;
+  }
+}
+
+.hero__content {
+  padding-top: calc(var(--header-h) + 64px);
+  padding-bottom: 40px;
+}
+
+.hero__eyebrow {
+  margin-bottom: 28px;
+  color: var(--accent);
+}
+
+.hero__eyebrow-rule {
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+}
+
+.hero__title {
+  margin-bottom: 32px;
+}
+
+.hero__bottom {
+  display: grid;
+  gap: 32px;
+}
+
+.hero__lead {
+  max-width: 440px;
+  color: #B3B7BE;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hero__meta {
+  border-top: 1px solid var(--line);
+}
+
+.hero__meta-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 64px;
+  color: var(--muted);
+}
+
+.hero__meta-hours,
+.hero__meta-claim {
+  display: none;
+}
+
+.hero__scroll {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  color: var(--accent);
+}
+
+.hero__scroll-line {
+  position: relative;
+  width: 48px;
+  height: 1px;
+  background: var(--line-strong);
+  overflow: hidden;
+}
+
+.hero__scroll-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  animation: scrollCue 2.2s var(--ease-in-out) infinite;
+}
+
+@keyframes scrollCue {
+  0% { transform: translateX(-100%); }
+  60%, 100% { transform: translateX(100%); }
+}
+
+@media (max-width: 479px) {
+  .hero__actions .btn {
+    flex: 1 1 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero__meta-hours {
+    display: inline;
+  }
+
+  .hero__scroll {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero__content {
+    padding-bottom: 56px;
+  }
+
+  .hero__bottom {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
+
+  .hero__meta-claim {
+    display: inline;
+  }
+}

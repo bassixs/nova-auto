@@ -1,0 +1,226 @@
+.svc {
+  background: var(--bg-2);
+}
+
+.svc__stage {
+  display: none;
+}
+
+/* Mobile: swipeable cards */
+.svc__track {
+  display: flex;
+  gap: 12px;
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.svc__track::-webkit-scrollbar {
+  display: none;
+}
+
+.svc__item {
+  flex: 0 0 min(82vw, 420px);
+  scroll-snap-align: start;
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+
+.svc__item-media {
+  aspect-ratio: 4 / 3.4;
+  overflow: hidden;
+}
+
+.svc__item-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.svc__item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px 20px 24px;
+}
+
+.svc__item-top {
+  display: flex;
+  justify-content: space-between;
+  color: var(--metal);
+}
+
+.svc__item-title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.svc__item-text {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.svc__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-start;
+  min-height: 44px;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text);
+  border-bottom: 1px solid var(--line-strong);
+  transition: border-color 0.4s var(--ease), gap 0.4s var(--ease);
+}
+
+.svc__more:hover {
+  gap: 16px;
+  border-color: var(--text);
+}
+
+.svc__dots {
+  display: flex;
+  gap: 6px;
+  margin-top: 24px;
+}
+
+.svc__dots span {
+  width: 18px;
+  height: 2px;
+  background: var(--line-strong);
+  transition: width 0.5s var(--ease), background-color 0.5s var(--ease);
+}
+
+.svc__dots span.is-active {
+  width: 40px;
+  background: var(--accent);
+}
+
+/* Desktop: sticky stage + interactive list */
+@media (min-width: 1024px) {
+  .svc__layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .svc__stage {
+    position: sticky;
+    top: calc(var(--header-h) + 32px);
+    display: block;
+    aspect-ratio: 4 / 4.6;
+    max-height: calc(100vh - var(--header-h) - 64px);
+    width: 100%;
+    overflow: hidden;
+    background: var(--card);
+  }
+
+  .svc__stage-frame,
+  .svc__stage-zoom {
+    position: absolute;
+    inset: 0;
+  }
+
+  .svc__stage-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .svc__stage-shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(8, 9, 11, 0.75) 0%, rgba(8, 9, 11, 0) 40%);
+    pointer-events: none;
+  }
+
+  .svc__stage-caption {
+    position: absolute;
+    left: 32px;
+    bottom: 28px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    color: var(--muted);
+  }
+
+  .svc__stage-num {
+    font-size: 88px;
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    color: var(--text);
+  }
+
+  .svc__track {
+    display: block;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    border-top: 1px solid var(--line);
+  }
+
+  .svc__item {
+    background: none;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    transition: opacity 0.5s var(--ease);
+  }
+
+  .svc__item-media {
+    display: none;
+  }
+
+  .svc__item-body {
+    position: relative;
+    padding: 40px 0 40px 8px;
+  }
+
+  .svc__item-body::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 50%;
+    width: 1px;
+    height: 0;
+    background: var(--accent);
+    transform: translateY(-50%);
+    transition: height 0.6s var(--ease);
+  }
+
+  .svc__item.is-active .svc__item-body::before {
+    height: 60%;
+  }
+
+  .svc__track:hover .svc__item:not(.is-active) {
+    opacity: 0.45;
+  }
+
+  .svc__item-title {
+    font-size: clamp(28px, 2.6vw, 40px);
+    transition: transform 0.6s var(--ease);
+  }
+
+  .svc__item.is-active .svc__item-title {
+    transform: translateX(10px);
+  }
+
+  .svc__item-text {
+    max-width: 440px;
+  }
+
+  .svc__dots {
+    display: none;
+  }
+}

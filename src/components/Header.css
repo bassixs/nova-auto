@@ -1,0 +1,241 @@
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 300;
+  transition: background-color 0.5s var(--ease), border-color 0.5s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+
+.header--solid {
+  background: rgba(8, 9, 11, 0.78);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border-bottom-color: var(--line);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: var(--header-h);
+}
+
+.header__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--accent);
+  transform-origin: left center;
+  opacity: 0.7;
+}
+
+.logo {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.logo__main {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.logo__sub {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  color: var(--metal);
+}
+
+.header__nav {
+  display: none;
+}
+
+.header__link {
+  position: relative;
+  padding: 8px 0;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  transition: color 0.3s var(--ease);
+}
+
+.header__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2px;
+  height: 1px;
+  background: var(--text);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 0.5s var(--ease);
+}
+
+.header__link:hover,
+.header__link.is-active {
+  color: var(--text);
+}
+
+.header__link:hover::after,
+.header__link.is-active::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.header__actions {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header__phone {
+  display: none;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  transition: color 0.3s;
+}
+
+.header__phone:hover {
+  color: var(--text);
+}
+
+.header .header__cta {
+  display: none;
+  min-height: 42px;
+  padding: 0 20px;
+  font-size: 11px;
+}
+
+.burger {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+}
+
+.burger span {
+  position: absolute;
+  left: 11px;
+  right: 11px;
+  height: 1.5px;
+  background: var(--text);
+  transition: transform 0.6s var(--ease), top 0.6s var(--ease);
+}
+
+.burger span:first-child { top: 18px; }
+.burger span:last-child { top: 25px; }
+
+.burger.is-open span:first-child {
+  top: 21.5px;
+  transform: rotate(45deg);
+}
+
+.burger.is-open span:last-child {
+  top: 21.5px;
+  transform: rotate(-45deg);
+}
+
+@media (min-width: 768px) {
+  .header .header__cta {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 1080px) {
+  .header__nav {
+    display: flex;
+    gap: 32px;
+  }
+
+  .burger {
+    display: none;
+  }
+}
+
+@media (min-width: 1320px) {
+  .header__phone {
+    display: inline;
+  }
+}
+
+/* Mobile menu */
+.mmenu {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  background: var(--bg);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.mmenu__inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100%;
+  padding-top: calc(var(--header-h) + 40px);
+  padding-bottom: calc(28px + var(--safe-bottom));
+  gap: 48px;
+}
+
+.mmenu__item {
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.mmenu__link {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 14px 0;
+  font-size: clamp(32px, 9vw, 56px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  color: var(--muted);
+  transition: color 0.3s;
+}
+
+.mmenu__link.is-active,
+.mmenu__link:active {
+  color: var(--text);
+}
+
+.mmenu__num {
+  font-size: 11px;
+  color: var(--metal);
+  transform: translateY(-1.2em);
+}
+
+.mmenu__footer {
+  display: grid;
+  gap: 24px;
+}
+
+.mmenu__contacts {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.mmenu__phone {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.mmenu__cta {
+  width: 100%;
+}
