@@ -83,7 +83,7 @@ export default function Lightbox({ index, onChange }) {
               <motion.img
                 key={item.id}
                 className="lb__img"
-                src={photoUrl(item.id, 1440)}
+                src={photoUrl(item.id, 1600)}
                 srcSet={photoSrcSet(item.id)}
                 sizes="92vw"
                 alt={item.title}
