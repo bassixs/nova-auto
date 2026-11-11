@@ -1,0 +1,91 @@
+.vpick {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.vpick__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-height: 112px;
+  padding: 16px;
+  text-align: left;
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  isolation: isolate;
+  transition: border-color 0.4s var(--ease), color 0.4s var(--ease);
+}
+
+.vpick__active {
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  background: var(--card-2);
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+}
+
+.vpick__label {
+  color: var(--metal);
+  transition: color 0.4s var(--ease);
+}
+
+.vpick__title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+.vpick__hint {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.vpick__item.is-active .vpick__label {
+  color: var(--text);
+}
+
+.vpick.has-error .vpick__item {
+  border-color: rgba(199, 124, 124, 0.55);
+}
+
+@media (hover: hover) {
+  .vpick__item:hover {
+    border-color: var(--metal);
+  }
+}
+
+.vpick--compact .vpick__item {
+  min-height: 0;
+  padding: 12px 14px;
+  gap: 2px;
+}
+
+.vpick--compact .vpick__title {
+  font-size: 14px;
+}
+
+.vpick--compact .vpick__hint {
+  font-size: 12px;
+}
+
+@media (min-width: 900px) {
+  .vpick:not(.vpick--compact) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .vpick:not(.vpick--compact) .vpick__item {
+    min-height: 132px;
+    padding: 20px;
+  }
+
+  .vpick:not(.vpick--compact) .vpick__title {
+    font-size: 18px;
+  }
+}

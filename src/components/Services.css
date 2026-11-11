@@ -175,7 +175,6 @@
     background: none;
     border: 0;
     border-bottom: 1px solid var(--line);
-    transition: opacity 0.5s var(--ease);
   }
 
   .svc__item-media {
@@ -184,7 +183,8 @@
 
   .svc__item-body {
     position: relative;
-    padding: 40px 0 40px 8px;
+    padding: 30px 0 30px 8px;
+    transition: opacity 0.5s var(--ease);
   }
 
   .svc__item-body::before {
@@ -203,7 +203,7 @@
     height: 60%;
   }
 
-  .svc__track:hover .svc__item:not(.is-active) {
+  .svc__track:hover .svc__item:not(.is-active) .svc__item-body {
     opacity: 0.45;
   }
 

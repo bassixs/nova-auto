@@ -5,6 +5,11 @@
   user-select: none;
 }
 
+.marquee__shift {
+  width: max-content;
+  will-change: transform;
+}
+
 .marquee__track {
   display: flex;
   width: max-content;

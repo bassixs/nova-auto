@@ -2,6 +2,7 @@
   --spot-x: 70%;
   --spot-y: 40%;
   position: relative;
+  z-index: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -10,10 +11,21 @@
   isolation: isolate;
 }
 
+.hero--pinned {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+}
+
+/* The section that follows a pinned hero slides over it and casts a soft shadow */
+.hero--pinned + * {
+  box-shadow: 0 -40px 80px rgba(0, 0, 0, 0.6);
+}
+
 .hero__media {
   position: absolute;
   inset: -2% 0 0;
-  z-index: -3;
+  z-index: -4;
   will-change: transform;
 }
 
@@ -31,9 +43,9 @@
 .hero__shade {
   position: absolute;
   inset: 0;
-  z-index: -2;
+  z-index: -3;
   background:
-    linear-gradient(180deg, rgba(8, 9, 11, 0.55) 0%, rgba(8, 9, 11, 0) 22%),
+    linear-gradient(180deg, rgba(8, 9, 11, 0.6) 0%, rgba(8, 9, 11, 0) 22%),
     linear-gradient(0deg, rgba(8, 9, 11, 1) 0%, rgba(8, 9, 11, 0.86) 26%, rgba(8, 9, 11, 0.2) 62%, rgba(8, 9, 11, 0.15) 100%),
     linear-gradient(90deg, rgba(8, 9, 11, 0.6) 0%, rgba(8, 9, 11, 0) 55%);
 }
@@ -42,12 +54,20 @@
 .hero__spot {
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: -2;
   pointer-events: none;
   background: radial-gradient(520px circle at var(--spot-x) var(--spot-y), rgba(199, 205, 213, 0.16), transparent 65%);
   mix-blend-mode: overlay;
   opacity: 0;
   transition: opacity 0.8s var(--ease);
+}
+
+.hero__dim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--bg);
+  pointer-events: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -57,28 +77,49 @@
 }
 
 .hero__content {
-  padding-top: calc(var(--header-h) + 64px);
-  padding-bottom: 40px;
+  padding-top: calc(var(--header-h) + 56px);
+  padding-bottom: 36px;
 }
 
-.hero__eyebrow {
-  margin-bottom: 28px;
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+  margin-bottom: 24px;
+  padding: 0 14px 0 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   color: var(--accent);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: border-color 0.4s var(--ease), color 0.4s var(--ease);
 }
 
-.hero__eyebrow-rule {
-  width: 28px;
-  height: 1px;
-  background: currentColor;
+.hero__badge:hover {
+  color: var(--text);
+  border-color: var(--metal);
 }
 
 .hero__title {
-  margin-bottom: 32px;
+  margin-bottom: 28px;
+}
+
+.hero__tagline {
+  margin-top: 0.5em;
+  font-size: clamp(22px, 3.7vw, 54px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
 }
 
 .hero__bottom {
   display: grid;
-  gap: 32px;
+  gap: 28px;
 }
 
 .hero__lead {
@@ -101,13 +142,22 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  min-height: 64px;
+  min-height: 60px;
   color: var(--muted);
 }
 
-.hero__meta-hours,
-.hero__meta-claim {
-  display: none;
+.hero__meta-places {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 28px;
+}
+
+.hero__meta-places a {
+  transition: color 0.3s;
+}
+
+.hero__meta-places a:hover {
+  color: var(--text);
 }
 
 .hero__scroll {
@@ -145,10 +195,6 @@
 }
 
 @media (min-width: 768px) {
-  .hero__meta-hours {
-    display: inline;
-  }
-
   .hero__scroll {
     display: inline-flex;
   }
@@ -156,15 +202,11 @@
 
 @media (min-width: 1024px) {
   .hero__content {
-    padding-bottom: 56px;
+    padding-bottom: 52px;
   }
 
   .hero__bottom {
     grid-template-columns: 1fr auto;
     align-items: end;
-  }
-
-  .hero__meta-claim {
-    display: inline;
   }
 }

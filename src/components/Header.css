@@ -36,21 +36,20 @@
   position: relative;
   z-index: 2;
   display: inline-flex;
-  align-items: baseline;
-  gap: 8px;
+  align-items: center;
+  min-height: 44px;
 }
 
-.logo__main {
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
+.wordmark {
+  display: block;
+  width: auto;
+  height: 17px;
 }
 
-.logo__sub {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.32em;
-  color: var(--metal);
+@media (min-width: 768px) {
+  .wordmark {
+    height: 20px;
+  }
 }
 
 .header__nav {

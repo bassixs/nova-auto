@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring } from 'framer-motion'
-import { CONTACTS, NAV } from '../data/content'
+import { CONTACT, LOCATIONS, telHref } from '../data/business'
+import { NAV } from '../data/content'
 import { lockScroll, unlockScroll } from '../lib/scroll'
 import Button from './ui/Button'
+import { Wordmark } from './ui/Logo'
 import { EASE } from './ui/motion'
 import './Header.css'
 
@@ -28,9 +30,8 @@ const SECTION_IDS = NAV.map((n) => n.href.slice(1))
 
 export function Logo({ className = '' }) {
   return (
-    <a href="#" className={`logo ${className}`} aria-label="NOVA AUTO — наверх">
-      <span className="logo__main">NOVA</span>
-      <span className="logo__sub">AUTO</span>
+    <a href="#" className={`logo ${className}`} aria-label="DARK VISION — наверх">
+      <Wordmark />
     </a>
   )
 }
@@ -86,7 +87,9 @@ export default function Header({ ready }) {
           </nav>
 
           <div className="header__actions">
-            <a href={CONTACTS.phoneHref} className="header__phone mono">{CONTACTS.phone}</a>
+            {CONTACT.phone && (
+              <a href={telHref(CONTACT.phone)} className="header__phone mono">{CONTACT.phone}</a>
+            )}
             <Button href="#booking" className="header__cta" arrow={false}>Записаться</Button>
             <button
               type="button"
@@ -158,9 +161,14 @@ function MobileMenu({ active, onClose }) {
           transition={{ delay: 0.55, duration: 0.8, ease: EASE }}
         >
           <div className="mmenu__contacts">
-            <a href={CONTACTS.phoneHref} className="mmenu__phone">{CONTACTS.phone}</a>
-            <span className="mono">{CONTACTS.hoursShort}</span>
-            <span className="mono">{CONTACTS.address}</span>
+            {CONTACT.phone && (
+              <a href={telHref(CONTACT.phone)} className="mmenu__phone">{CONTACT.phone}</a>
+            )}
+            {LOCATIONS.map((loc) => (
+              <span className="mono" key={loc.id}>
+                {loc.street}{loc.hours ? ` · ${loc.hours.opens}–${loc.hours.closes}` : ''}
+              </span>
+            ))}
           </div>
           <Button href="#booking" onClick={onClose} className="mmenu__cta">Записаться</Button>
         </motion.div>

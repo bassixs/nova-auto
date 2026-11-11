@@ -1,0 +1,17 @@
+.ptag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.28em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ptag__from,
+.ptag__cur {
+  font-size: 0.6em;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--metal);
+}

@@ -28,8 +28,8 @@
 .smodal__media {
   position: relative;
   flex-shrink: 0;
-  height: 34svh;
-  max-height: 300px;
+  height: 24svh;
+  max-height: 220px;
   overflow: hidden;
   cursor: grab;
 }
@@ -44,7 +44,7 @@
 .smodal__media-shade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(0deg, var(--bg-2) 0%, rgba(17, 19, 23, 0) 55%);
+  background: linear-gradient(0deg, var(--bg-2) 0%, rgba(17, 19, 23, 0) 60%);
 }
 
 .smodal__grip {
@@ -90,77 +90,136 @@
 }
 
 .smodal__title {
-  margin: 12px 0 10px;
-  font-size: clamp(30px, 7vw, 44px);
+  margin: 12px 0 8px;
+  font-size: clamp(28px, 7vw, 42px);
   font-weight: 800;
-  line-height: 1;
+  line-height: 1.02;
   letter-spacing: -0.04em;
 }
 
 .smodal__lead {
   color: var(--muted);
-  line-height: 1.65;
-}
-
-.smodal__facts {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin: 28px 0;
-  border-block: 1px solid var(--line);
-}
-
-.smodal__facts > div {
-  padding: 16px 0;
-}
-
-.smodal__facts > div + div {
-  padding-left: 20px;
-  border-left: 1px solid var(--line);
-}
-
-.smodal__facts dt {
-  margin-bottom: 6px;
-  color: var(--metal);
-}
-
-.smodal__facts dd {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  line-height: 1.6;
 }
 
 .smodal__subtitle {
-  margin-bottom: 14px;
+  display: block;
+  margin-bottom: 10px;
   color: var(--metal);
 }
 
-.smodal__list {
-  display: grid;
-  gap: 12px;
+.smodal__options {
+  min-width: 0;
+  margin-top: 24px;
+  border: 0;
 }
 
-.smodal__list li {
-  display: grid;
-  grid-template-columns: 16px 1fr;
-  gap: 12px;
-  font-size: 15px;
-  line-height: 1.5;
+.smodal__opt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  min-height: 56px;
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 17px;
+  border: 1px solid var(--line);
+  border-bottom-width: 0;
+  cursor: pointer;
+  transition: background-color 0.4s var(--ease), border-color 0.4s var(--ease);
 }
 
-.smodal__list svg {
-  margin-top: 4px;
+.smodal__opt:last-child {
+  border-bottom-width: 1px;
+}
+
+.smodal__opt.is-active {
+  background: var(--card-2);
+  border-color: var(--accent);
+  border-bottom-width: 1px;
+}
+
+.smodal__opt.is-active + .smodal__opt {
+  border-top-width: 0;
+}
+
+.smodal__opt:has(input:focus-visible) {
+  outline: 1px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.smodal__opt-name {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.35;
   color: var(--accent);
 }
 
+.smodal__opt-name .mono {
+  flex-shrink: 0;
+  color: var(--metal);
+}
+
+.smodal__flat {
+  margin-top: 24px;
+  padding: 18px 0;
+  border-block: 1px solid var(--line);
+}
+
+.smodal__flat-price {
+  font-size: 32px;
+}
+
+.smodal__qty {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.smodal__qty .smodal__subtitle {
+  margin-bottom: 0;
+}
+
 .smodal__note {
-  margin: 28px 0 20px;
+  margin: 22px 0 20px;
   font-size: 12px;
   line-height: 1.6;
   color: var(--muted);
 }
 
-.smodal__cta {
+.smodal__actions {
+  display: grid;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.smodal__actions .btn {
   width: 100%;
+}
+
+.smodal__actions .ptag__from,
+.smodal__actions .ptag__cur {
+  font-size: 1em;
+  font-weight: 700;
+  color: inherit;
+}
+
+.smodal__remove {
+  min-height: 44px;
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.3s;
+}
+
+.smodal__remove:hover {
+  color: var(--text);
 }
 
 @media (min-width: 768px) {
@@ -175,7 +234,7 @@
   }
 
   .smodal__media {
-    height: 38vh;
+    height: 30vh;
     max-height: none;
     cursor: default;
   }
@@ -187,9 +246,5 @@
   .smodal__body {
     flex: 1;
     padding: 8px 48px 48px;
-  }
-
-  .smodal__cta {
-    margin-top: auto;
   }
 }

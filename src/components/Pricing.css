@@ -1,108 +1,177 @@
-.price__switch {
-  display: inline-flex;
-  max-width: 100%;
-  margin-bottom: 40px;
-  padding: 4px;
-  border: 1px solid var(--line-strong);
-  border-radius: 2px;
-  overflow-x: auto;
-  scrollbar-width: none;
+.price__step + .price__step {
+  margin-top: clamp(40px, 5vw, 64px);
 }
 
-.price__switch-btn {
+.price__step-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  color: var(--metal);
+}
+
+.price__step-label span {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  color: var(--text);
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  letter-spacing: 0;
+}
+
+/* Direction tabs */
+.price__tabs {
+  display: flex;
+  gap: 4px 28px;
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--line);
+}
+
+.price__tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.price__tab {
   position: relative;
-  min-height: 44px;
-  padding: 0 clamp(14px, 3vw, 24px);
-  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  min-height: 52px;
+  font-size: 15px;
   font-weight: 600;
   white-space: nowrap;
   color: var(--muted);
   transition: color 0.4s var(--ease);
 }
 
-.price__switch-btn.is-active {
-  color: var(--bg);
+.price__tab.is-active,
+.price__tab:hover {
+  color: var(--text);
 }
 
-.price__switch-pill {
+.price__tab-line {
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
   background: var(--accent);
-  border-radius: 1px;
 }
 
-.price__switch-label {
-  position: relative;
+.price__tab-count {
+  display: grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--bg);
+  background: var(--accent);
+  border-radius: 10px;
 }
 
-.price__row {
+.price__auto {
+  overflow: hidden;
+}
+
+/* Service rows */
+.srow {
   position: relative;
   display: grid;
-  grid-template-columns: 28px 1fr auto;
+  grid-template-columns: 1fr 44px;
   align-items: center;
-  gap: 4px 12px;
-  width: 100%;
-  padding: 22px 0;
-  text-align: left;
-  overflow: hidden;
+  border-bottom: 1px solid var(--line);
   isolation: isolate;
 }
 
-.price__row::before {
+.srow::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(90deg, rgba(199, 205, 213, 0.07), rgba(199, 205, 213, 0));
+  background: linear-gradient(90deg, rgba(199, 205, 213, 0.08), rgba(199, 205, 213, 0));
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform 0.7s var(--ease);
 }
 
-.price__num {
-  align-self: start;
-  padding-top: 6px;
-  color: var(--metal);
+.srow.is-selected::before {
+  transform: scaleX(1);
 }
 
-.price__name {
+.srow__toggle {
   display: grid;
-  gap: 4px;
+  grid-template-columns: 32px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+  padding: 14px 4px 14px 0;
+  text-align: left;
 }
 
-.price__title {
-  font-size: clamp(18px, 2.4vw, 30px);
+.srow__box {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  color: var(--muted);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  transition: background-color 0.4s var(--ease), border-color 0.4s var(--ease), color 0.4s var(--ease), transform 0.5s var(--ease);
+}
+
+.srow.is-selected .srow__box {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.srow__toggle:active .srow__box {
+  transform: scale(0.9);
+}
+
+.srow__name {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.srow__title {
+  font-size: clamp(16px, 1.9vw, 24px);
   font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.2;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
   transition: transform 0.6s var(--ease);
 }
 
-.price__note {
+.srow__meta {
   font-size: 13px;
+  line-height: 1.4;
   color: var(--muted);
 }
 
-.price__value {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 6px;
-  font-size: clamp(18px, 2.4vw, 30px);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
+.srow__price {
+  font-size: clamp(16px, 1.9vw, 24px);
 }
 
-.price__from,
-.price__cur {
-  font-size: 0.55em;
-  font-weight: 500;
-  color: var(--metal);
+.srow__info {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--muted);
+  transition: color 0.3s var(--ease);
 }
 
-.price__go {
-  display: none;
+.srow__info:hover {
+  color: var(--text);
 }
 
 .price__footer {
@@ -111,58 +180,69 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  margin-top: 40px;
+  margin-top: 36px;
 }
 
-.price__disclaimer {
-  display: flex;
-  gap: 12px;
+.price__note {
   max-width: 520px;
   font-size: 13px;
   line-height: 1.6;
   color: var(--muted);
 }
 
-.price__disclaimer .mono {
-  flex-shrink: 0;
-  padding: 2px 6px;
-  height: fit-content;
-  font-size: 10px;
-  color: var(--accent);
-  border: 1px solid var(--line-strong);
-}
-
 @media (min-width: 768px) {
-  .price__row {
-    grid-template-columns: 64px 1fr auto 56px;
-    padding: 32px 0;
+  .price__tabs {
+    margin-inline: 0;
+    padding-inline: 0;
+    flex-wrap: wrap;
+    overflow: visible;
   }
 
-  .price__go {
-    display: grid;
-    place-items: center;
+  .srow {
+    grid-template-columns: 1fr 56px;
+  }
+
+  .srow__toggle {
+    grid-template-columns: 40px 1fr auto;
+    gap: 20px;
+    min-height: 88px;
+    padding: 20px 12px 20px 0;
+  }
+
+  .srow__box {
+    width: 40px;
+    height: 40px;
+  }
+
+  .srow__info {
     justify-self: end;
-    width: 44px;
-    height: 44px;
     border: 1px solid var(--line-strong);
-    color: var(--muted);
-    transition: background-color 0.5s var(--ease), color 0.5s var(--ease), border-color 0.5s var(--ease), transform 0.6s var(--ease);
+    transition: background-color 0.5s var(--ease), color 0.5s var(--ease), border-color 0.5s var(--ease);
   }
 }
 
 @media (hover: hover) {
-  .price__row:hover::before {
+  .srow:hover::before {
     transform: scaleX(1);
   }
 
-  .price__row:hover .price__title {
-    transform: translateX(8px);
+  .srow__toggle:hover .srow__title {
+    transform: translateX(6px);
   }
 
-  .price__row:hover .price__go {
+  .srow__toggle:hover .srow__box {
+    color: var(--text);
+    border-color: var(--metal);
+  }
+
+  .srow.is-selected .srow__toggle:hover .srow__box {
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+
+  .srow__info:hover {
     background: var(--text);
     border-color: var(--text);
     color: var(--bg);
-    transform: rotate(-45deg);
   }
 }

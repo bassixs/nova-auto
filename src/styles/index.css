@@ -134,6 +134,25 @@ body::after {
   padding-block: var(--section-y);
 }
 
+/* Everything after the hero sits above it with an opaque background, so a pinned hero is covered on scroll */
+:where(main > :not(.hero)) {
+  position: relative;
+  z-index: 1;
+  background-color: var(--bg);
+}
+
+.tag {
+  flex-shrink: 0;
+  height: fit-content;
+  padding: 2px 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--line-strong);
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
