@@ -621,6 +621,10 @@
     top: calc(var(--header-h) + 40px);
   }
 
+  .book__intro .h-section {
+    font-size: clamp(36px, 4vw, 60px);
+  }
+
   .book__mark {
     display: block;
     width: min(100%, 340px);

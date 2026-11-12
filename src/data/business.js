@@ -74,13 +74,3 @@ export const yandexCardUrl = (loc) => `https://yandex.ru/maps/org/dark_vision/${
 export const yandexReviewsUrl = (loc) => `${yandexCardUrl(loc)}reviews/`
 
 export const routeUrl = (loc) => `https://yandex.ru/maps/?rtext=~${loc.geo.lat},${loc.geo.lon}&rtt=auto`
-
-/** Адрес виджета Яндекс Карт. focus — id локации или null, чтобы показать обе точки. */
-export function mapWidgetUrl(focus = null, wide = true) {
-  const points = LOCATIONS.map((l) => `${l.geo.lon},${l.geo.lat},pm2dbl`).join('~')
-  const target = LOCATIONS.find((l) => l.id === focus)
-  const lon = target ? target.geo.lon : LOCATIONS.reduce((s, l) => s + l.geo.lon, 0) / LOCATIONS.length
-  const lat = target ? target.geo.lat : LOCATIONS.reduce((s, l) => s + l.geo.lat, 0) / LOCATIONS.length
-  const z = target ? 16 : wide ? 14 : 13
-  return `https://yandex.ru/map-widget/v1/?ll=${lon.toFixed(6)}%2C${lat.toFixed(6)}&z=${z}&pt=${encodeURIComponent(points)}`
-}

@@ -98,6 +98,10 @@
     gap: 64px;
   }
 
+  .ft__cta-title {
+    font-size: clamp(36px, 4.2vw, 62px);
+  }
+
   .ft__logo {
     width: clamp(300px, 30vw, 420px);
     margin-right: -24px;
