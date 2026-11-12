@@ -2,40 +2,27 @@
   position: fixed;
   inset: 0;
   z-index: 900;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
+  display: grid;
+  place-items: center;
+}
+
+.preloader__bg {
+  position: absolute;
+  inset: 0;
   background: var(--bg);
-  clip-path: inset(0% 0% 0% 0%);
 }
 
-.preloader__mark {
-  display: flex;
-  font-size: clamp(56px, 14vw, 160px);
-  font-weight: 800;
-  line-height: 0.9;
-  letter-spacing: -0.05em;
+.preloader__logo {
+  position: relative;
+  width: min(76vw, 58svh, 480px);
+  will-change: transform, opacity;
 }
 
-.preloader__char {
+.preloader__sweep,
+.preloader__sweep img {
   display: block;
-  overflow: hidden;
-  padding-bottom: 0.06em;
-}
-
-.preloader__char > span {
-  display: block;
-  background: var(--metal-text);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.preloader__tag {
-  color: var(--metal);
+  width: 100%;
+  height: auto;
 }
 
 .preloader__bar {

@@ -1,0 +1,8 @@
+{
+  "name": "dark-vision-booking",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Приём заявок с сайта DARK VISION и пересылка в Telegram",
+  "type": "commonjs",
+  "main": "index.js"
+}

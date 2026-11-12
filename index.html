@@ -3,27 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>NOVA AUTO — Premium Car Care & Detailing Studio в Калуге</title>
-    <meta name="description" content="NOVA AUTO — студия премиального ухода за автомобилем. Детейлинг-мойка, химчистка салона, полировка кузова и керамическая защита с вниманием к каждой детали." />
+    <title>{{SITE_TITLE}}</title>
+    <meta name="description" content="{{SITE_DESCRIPTION}}" />
     <meta name="theme-color" content="#08090B" />
     <meta name="color-scheme" content="dark" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="canonical" href="{{SITE_URL}}" />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ru_RU" />
-    <meta property="og:site_name" content="NOVA AUTO" />
-    <meta property="og:title" content="NOVA AUTO — Совершенство в каждой детали" />
-    <meta property="og:description" content="Детейлинг, глубокая очистка и защита кузова. Premium Car Care Studio." />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1608506436795-af65d01305bf?auto=format&fit=crop&w=1200&h=630&q=80" />
+    <meta property="og:site_name" content="{{SITE_NAME}}" />
+    <meta property="og:url" content="{{SITE_URL}}" />
+    <meta property="og:title" content="{{SITE_NAME}} — {{SITE_TAGLINE}}" />
+    <meta property="og:description" content="{{SITE_LEAD}}" />
+    <meta property="og:image" content="{{SITE_URL}}brand/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <script type="application/ld+json">{{SCHEMA_JSON}}</script>
+
+    <link rel="preload" as="image" href="/brand/logo-640.webp" type="image/webp" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>
-    <noscript>Для работы сайта NOVA AUTO включите JavaScript.</noscript>
+    <noscript>
+      <h1>{{SITE_NAME}} — автомойка и детейлинг в Калуге</h1>
+      <p>{{SITE_LEAD}} Для работы сайта включите JavaScript.</p>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

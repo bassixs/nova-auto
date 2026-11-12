@@ -1,0 +1,353 @@
+.loc__grid {
+  display: grid;
+  gap: 16px;
+}
+
+/* Location card */
+.lcard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border: 1px solid var(--line);
+  transition: border-color 0.6s var(--ease);
+}
+
+.lcard.is-selected {
+  border-color: var(--accent);
+}
+
+.lcard__media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--bg-2);
+}
+
+.lcard__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.4s var(--ease);
+}
+
+/* Shown until a real photo of the location is added */
+.lcard__plate {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 90% at 85% 110%, rgba(199, 205, 213, 0.14), transparent 60%),
+    linear-gradient(135deg, #1b1e25 0%, #0d0f13 70%);
+}
+
+.lcard__plate-num {
+  position: absolute;
+  right: -0.04em;
+  bottom: -0.2em;
+  font-size: clamp(180px, 34vw, 300px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(199, 205, 213, 0.3);
+  transition: transform 1.4s var(--ease);
+}
+
+.lcard__media-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(23, 26, 31, 0.9) 0%, rgba(23, 26, 31, 0) 45%);
+  pointer-events: none;
+}
+
+.lcard__index {
+  position: absolute;
+  left: 20px;
+  top: 18px;
+  color: var(--accent);
+}
+
+.lcard__badge {
+  position: absolute;
+  right: 16px;
+  top: 14px;
+  padding: 4px 8px;
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.lcard__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 20px;
+  padding: 4px 20px 22px;
+}
+
+.lcard__title {
+  font-size: clamp(28px, 3.4vw, 44px);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.lcard__facts {
+  display: grid;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--accent);
+}
+
+.lcard__facts li {
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.lcard__facts svg {
+  color: var(--metal);
+}
+
+.lcard__facts a {
+  width: fit-content;
+  transition: color 0.3s;
+}
+
+.lcard__facts a:hover {
+  color: var(--text);
+}
+
+.lcard__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.lcard__actions .btn {
+  flex: 1 1 200px;
+}
+
+.lcard__btn-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lcard__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  min-height: 28px;
+}
+
+.lcard__link {
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.3s;
+}
+
+.lcard__link:hover {
+  color: var(--text);
+}
+
+.lcard__chosen {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+}
+
+@media (hover: hover) {
+  .lcard:hover {
+    border-color: var(--line-strong);
+  }
+
+  .lcard.is-selected:hover {
+    border-color: var(--accent);
+  }
+
+  .lcard:hover .lcard__media img {
+    transform: scale(1.05);
+  }
+
+  .lcard:hover .lcard__plate-num {
+    transform: translate(-3%, -4%);
+  }
+}
+
+/* Map */
+.lmap {
+  margin-top: 16px;
+  border: 1px solid var(--line);
+  background: var(--card);
+}
+
+.lmap__bar {
+  display: flex;
+  gap: 4px;
+  padding: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--line);
+}
+
+.lmap__bar::-webkit-scrollbar {
+  display: none;
+}
+
+.lmap__chip {
+  position: relative;
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 0 16px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--muted);
+  isolation: isolate;
+  transition: color 0.4s var(--ease);
+}
+
+.lmap__chip.is-active {
+  color: var(--bg);
+}
+
+.lmap__chip-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--accent);
+  border-radius: 1px;
+}
+
+.lmap__frame {
+  position: relative;
+  height: clamp(340px, 56vw, 520px);
+  overflow: hidden;
+  background: #101216;
+}
+
+.lmap__canvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* Yandex Maps has no dark theme, so only the tile layer is inverted; markers and copyright stay as is */
+.lmap__canvas [class*='ground-pane'] {
+  filter: invert(0.92) hue-rotate(180deg) saturate(0.5) brightness(0.92) contrast(0.92);
+}
+
+.lmap__state {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.lmap__state a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.lmap__hint {
+  position: absolute;
+  left: 50%;
+  bottom: 34px;
+  padding: 8px 12px;
+  font-size: 12px;
+  white-space: nowrap;
+  color: var(--accent);
+  background: rgba(8, 9, 11, 0.8);
+  border: 1px solid var(--line-strong);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* Location marker drawn by the Yandex Maps template layout */
+.ymark {
+  position: absolute;
+  left: -9px;
+  top: -9px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.ymark i {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  background: var(--text);
+  border: 5px solid var(--bg);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--text), 0 0 18px rgba(244, 244, 244, 0.6);
+}
+
+.ymark span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 30px;
+  padding: 0 12px 0 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  background: rgba(8, 9, 11, 0.9);
+  border: 1px solid var(--line-strong);
+}
+
+.ymark b {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--metal);
+}
+
+.ymark.is-active span {
+  color: var(--bg);
+  background: var(--text);
+  border-color: var(--text);
+}
+
+.ymark.is-active b {
+  color: var(--bg);
+}
+
+@media (min-width: 900px) {
+  .loc__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .lcard__body {
+    padding: 8px 32px 30px;
+    gap: 24px;
+  }
+
+  .lcard__index {
+    left: 32px;
+    top: 26px;
+  }
+
+  .lmap {
+    margin-top: 20px;
+  }
+}

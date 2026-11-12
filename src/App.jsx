@@ -1,27 +1,25 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { MotionConfig } from 'framer-motion'
 import { initSmoothScroll, scrollToTarget } from './lib/scroll'
-import { BookingContext } from './lib/booking'
+import { OrderProvider } from './lib/order'
 import Preloader from './components/Preloader'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import Marquee from './components/Marquee'
-import Advantages from './components/Advantages'
 import Services from './components/Services'
 import ServiceModal from './components/ServiceModal'
 import Pricing from './components/Pricing'
 import Gallery from './components/Gallery'
 import Lightbox from './components/Lightbox'
 import About from './components/About'
+import Locations from './components/Locations'
 import Reviews from './components/Reviews'
 import Booking from './components/Booking'
-import Contacts from './components/Contacts'
 import Footer from './components/Footer'
-import MobileBar from './components/MobileBar'
+import OrderBar from './components/OrderBar'
 
 export default function App() {
   const [ready, setReady] = useState(false)
-  const [request, setRequest] = useState(null)
   const [openService, setOpenService] = useState(null)
   const [photoIndex, setPhotoIndex] = useState(null)
 
@@ -46,37 +44,29 @@ export default function App() {
     if (location.hash.length > 1) scrollToTarget(location.hash)
   }, [])
 
-  const chooseService = useCallback((name) => {
-    setRequest({ name, at: Date.now() })
-    scrollToTarget('#booking')
-  }, [])
-
   const closeService = useCallback(() => setOpenService(null), [])
-
-  const booking = useMemo(() => ({ request, chooseService }), [request, chooseService])
 
   return (
     <MotionConfig reducedMotion="user">
-      <BookingContext.Provider value={booking}>
+      <OrderProvider>
         <Preloader onDone={handleReady} />
         <Header ready={ready} />
         <main>
           <Hero ready={ready} />
           <Marquee />
-          <Advantages />
-          <Services onOpen={setOpenService} />
-          <Pricing />
+          <Services />
+          <Pricing onOpen={setOpenService} />
           <Gallery onOpen={setPhotoIndex} />
           <About />
+          <Locations />
           <Reviews />
           <Booking />
-          <Contacts />
         </main>
         <Footer />
-        <MobileBar />
+        <OrderBar />
         <ServiceModal service={openService} onClose={closeService} />
         <Lightbox index={photoIndex} onChange={setPhotoIndex} />
-      </BookingContext.Provider>
+      </OrderProvider>
     </MotionConfig>
   )
 }

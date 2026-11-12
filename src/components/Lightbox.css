@@ -53,14 +53,8 @@
 }
 
 .lb__caption {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
   font-size: 14px;
-}
-
-.lb__caption .mono {
-  color: var(--metal);
+  color: var(--muted);
 }
 
 .lb__nav {

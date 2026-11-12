@@ -25,6 +25,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          # Публичные настройки сборки: Settings → Secrets and variables → Actions → Variables
+          VITE_BOOKING_ENDPOINT: ${{ vars.VITE_BOOKING_ENDPOINT }}
+          VITE_YM_ID: ${{ vars.VITE_YM_ID }}
+          VITE_YMAPS_KEY: ${{ vars.VITE_YMAPS_KEY }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -1,14 +1,22 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { VISIT_STEPS } from '../data/content'
-import { PHOTOS } from '../lib/images'
+import { LOCATIONS } from '../data/business'
+import { ABOUT_PHOTO, ABOUT_STATEMENT, BOOKING_STEPS } from '../data/content'
+import { SERVICES, VEHICLE_CATEGORIES, pluralize } from '../data/services'
 import Img from './ui/Img'
 import SectionHead from './ui/SectionHead'
 import { Hairline, Reveal } from './ui/motion'
 import './About.css'
 
-const STATEMENT =
-  'NOVA AUTO — пространство профессионального автомобильного ухода, где технологии встречаются с вниманием к деталям. Мы подбираем решения под особенности каждого автомобиля и стремимся к результату, который заметен с первого взгляда.'
+// Цифры считаются из данных сайта, а не вписаны вручную
+const FACTS = [
+  { value: LOCATIONS.length, label: `${pluralize(LOCATIONS.length, ['локация', 'локации', 'локаций'])} в Калуге` },
+  { value: SERVICES.length, label: `${pluralize(SERVICES.length, ['услуга', 'услуги', 'услуг'])} в прайсе` },
+  {
+    value: VEHICLE_CATEGORIES.length,
+    label: `${pluralize(VEHICLE_CATEGORIES.length, ['категория', 'категории', 'категорий'])} автомобилей`,
+  },
+]
 
 function Word({ children, progress, range }) {
   const opacity = useTransform(progress, range, [0.16, 1])
@@ -47,24 +55,33 @@ export default function About() {
   return (
     <section className="about section" id="about">
       <div className="container">
-        <SectionHead index="05" label="О студии" title={'МЫ ЗАБОТИМСЯ\nО ТОМ, ЧТО ВАЖНО'} />
+        <SectionHead index="04" label="О нас" title={'ЧИСТОТА,\nКОТОРУЮ ВИДНО'} />
       </div>
 
       <div className="about__media" ref={mediaRef}>
         <motion.div className="about__media-clip" style={{ clipPath }}>
           <motion.div className="about__media-zoom" style={{ scale }}>
-            <Img id={PHOTOS.studioBmw} alt="Матово-чёрный автомобиль в светлом минималистичном боксе" sizes="100vw" />
+            <Img id={ABOUT_PHOTO.id} alt={ABOUT_PHOTO.alt} sizes="100vw" />
           </motion.div>
         </motion.div>
       </div>
 
       <div className="container about__body">
-        <ScrollStatement text={STATEMENT} />
+        <ScrollStatement text={ABOUT_STATEMENT} />
+
+        <ul className="about__facts">
+          {FACTS.map((fact, i) => (
+            <Reveal as="li" key={fact.label} className="about__fact" delay={i * 0.1}>
+              <span className="about__fact-value metal-text">{fact.value}</span>
+              <span className="about__fact-label">{fact.label}</span>
+            </Reveal>
+          ))}
+        </ul>
 
         <div className="about__visit">
-          <Reveal className="eyebrow about__visit-label" y={12}>Как проходит визит</Reveal>
+          <Reveal className="eyebrow about__visit-label" y={12}>Как записаться</Reveal>
           <ol className="about__steps">
-            {VISIT_STEPS.map((step, i) => (
+            {BOOKING_STEPS.map((step, i) => (
               <li key={step.title} className="about__step">
                 <Hairline delay={i * 0.1} />
                 <Reveal delay={0.1 + i * 0.1} y={20}>

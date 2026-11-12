@@ -1,99 +1,131 @@
-import { useEffect, useRef, useState } from 'react'
-import { animate, motion } from 'framer-motion'
-import { CAR_CLASSES, PRICES, formatPrice } from '../data/content'
-import { useBooking } from '../lib/booking'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { DIRECTIONS, priceOf, servicesOf } from '../data/services'
+import { useOrder } from '../lib/order'
 import SectionHead from './ui/SectionHead'
 import Button from './ui/Button'
-import { ArrowRight } from './ui/Icons'
-import { EASE, Hairline, Reveal } from './ui/motion'
+import PriceTag from './ui/PriceTag'
+import VehiclePicker from './ui/VehiclePicker'
+import { Check, Info, Plus } from './ui/Icons'
+import { EASE, Reveal } from './ui/motion'
 import './Pricing.css'
 
-function AnimatedPrice({ value }) {
-  const ref = useRef(null)
-  const from = useRef(value)
+/** Smoothly follows the height of its content when the list of services changes. */
+function AutoHeight({ children }) {
+  const inner = useRef(null)
+  const [height, setHeight] = useState('auto')
 
-  useEffect(() => {
-    const controls = animate(from.current, value, {
-      duration: 0.9,
-      ease: EASE,
-      onUpdate: (v) => {
-        from.current = v
-        if (ref.current) ref.current.textContent = formatPrice(v)
-      },
-    })
-    return () => controls.stop()
-  }, [value])
+  useLayoutEffect(() => {
+    const ro = new ResizeObserver(([entry]) => setHeight(entry.contentRect.height))
+    ro.observe(inner.current)
+    return () => ro.disconnect()
+  }, [])
 
-  return <span ref={ref}>{formatPrice(value)}</span>
+  return (
+    <motion.div className="price__auto" initial={false} animate={{ height }} transition={{ duration: 0.6, ease: EASE }}>
+      <div ref={inner}>{children}</div>
+    </motion.div>
+  )
 }
 
-const priceFor = (base, factor) => Math.round((base * factor) / 500) * 500
+const listVariants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.05 } },
+  exit: { opacity: 0, transition: { duration: 0.18 } },
+}
 
-export default function Pricing() {
-  const [carClass, setCarClass] = useState(CAR_CLASSES[0])
-  const { chooseService } = useBooking()
+const rowVariants = {
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+}
+
+export default function Pricing({ onOpen }) {
+  const { vehicle, setVehicle, direction, setDirection, selection, toggle } = useOrder()
+  const tabsRef = useRef(null)
+  const list = servicesOf(direction)
+  const mainSection = list[0].section
+
+  useEffect(() => {
+    const box = tabsRef.current
+    const tab = box?.querySelector('[aria-pressed="true"]')
+    if (tab) box.scrollTo({ left: tab.offsetLeft - (box.clientWidth - tab.offsetWidth) / 2, behavior: 'smooth' })
+  }, [direction])
 
   return (
     <section className="price section" id="pricing">
       <div className="container">
         <SectionHead
-          index="03"
-          label="Прайс-лист"
-          title="ПРОЗРАЧНЫЙ СЕРВИС"
-          aside="Ориентировочная стоимость по классу автомобиля. Точную цену называем после осмотра — до начала работ."
+          index="02"
+          label="Прайс"
+          title={'УСЛУГИ\nИ ЦЕНЫ'}
+          aside="Выберите категорию автомобиля — каталог покажет цены для неё. Отметьте нужные услуги и переходите к записи."
         />
 
-        <Reveal className="price__switch" role="radiogroup" aria-label="Класс автомобиля">
-          {CAR_CLASSES.map((c) => (
-            <button
-              key={c.key}
-              type="button"
-              role="radio"
-              aria-checked={c.key === carClass.key}
-              className={`price__switch-btn${c.key === carClass.key ? ' is-active' : ''}`}
-              onClick={() => setCarClass(c)}
-            >
-              {c.key === carClass.key && (
-                <motion.span className="price__switch-pill" layoutId="price-pill" transition={{ duration: 0.6, ease: EASE }} />
-              )}
-              <span className="price__switch-label">{c.label}</span>
-            </button>
-          ))}
+        <Reveal className="price__step">
+          <p className="price__step-label mono" id="price-vehicle-label">
+            <span>1</span> Категория автомобиля
+          </p>
+          <VehiclePicker value={vehicle} onChange={setVehicle} layoutId="vpick-catalog" labelledBy="price-vehicle-label" />
         </Reveal>
 
-        <ul className="price__list">
-          {PRICES.map((p, i) => (
-            <li key={p.title}>
-              <Hairline delay={i * 0.06} />
-              <Reveal delay={0.05 + i * 0.06} y={16}>
-                <button type="button" className="price__row" onClick={() => chooseService(p.title)}>
-                  <span className="price__num mono">0{i + 1}</span>
-                  <span className="price__name">
-                    <span className="price__title">{p.title}</span>
-                    <span className="price__note">{p.note}</span>
-                  </span>
-                  <span className="price__value">
-                    <span className="price__from">от</span>
-                    <AnimatedPrice value={priceFor(p.base, carClass.factor)} />
-                    <span className="price__cur">₽</span>
-                  </span>
-                  <span className="price__go" aria-hidden="true">
-                    <ArrowRight />
-                  </span>
-                  <span className="sr-only">— записаться</span>
+        <Reveal className="price__step" delay={0.1}>
+          <p className="price__step-label mono">
+            <span>2</span> Услуги
+          </p>
+
+          <div className="price__tabs" ref={tabsRef} role="group" aria-label="Направления услуг">
+            {DIRECTIONS.map((d) => {
+              const active = d.id === direction
+              const chosen = servicesOf(d.id).filter((s) => selection[s.id]).length
+              return (
+                <button
+                  key={d.id}
+                  type="button"
+                  className={`price__tab${active ? ' is-active' : ''}`}
+                  aria-pressed={active}
+                  onClick={() => setDirection(d.id)}
+                >
+                  {d.title}
+                  {chosen > 0 && <span className="price__tab-count">{chosen}</span>}
+                  {active && <motion.span className="price__tab-line" layoutId="price-tab-line" transition={{ duration: 0.55, ease: EASE }} />}
                 </button>
-              </Reveal>
-            </li>
-          ))}
-          <Hairline delay={0.3} />
-        </ul>
+              )
+            })}
+          </div>
+
+          <AutoHeight>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.ul key={direction} className="price__list" variants={listVariants} initial="hidden" animate="show" exit="exit">
+                {list.map((s) => {
+                  const selected = Boolean(selection[s.id])
+                  const meta = s.note ?? (s.section !== mainSection && s.section !== s.title ? s.section : null)
+                  return (
+                    <motion.li key={s.id} className={`srow${selected ? ' is-selected' : ''}`} variants={rowVariants}>
+                      <button type="button" className="srow__toggle" aria-pressed={selected} onClick={() => toggle(s.id)}>
+                        <span className="srow__box" aria-hidden="true">{selected ? <Check /> : <Plus />}</span>
+                        <span className="srow__name">
+                          <span className="srow__title">{s.title}</span>
+                          {meta && <span className="srow__meta">{meta}</span>}
+                        </span>
+                        <PriceTag price={priceOf(s, vehicle, selection[s.id]?.variant)} unit={s.unit} className="srow__price" />
+                        <span className="sr-only">{selected ? '— убрать из заявки' : '— добавить в заявку'}</span>
+                      </button>
+                      <button type="button" className="srow__info" onClick={() => onOpen(s)} aria-label={`Подробнее: ${s.title}`}>
+                        <Info />
+                      </button>
+                    </motion.li>
+                  )
+                })}
+              </motion.ul>
+            </AnimatePresence>
+          </AutoHeight>
+        </Reveal>
 
         <Reveal className="price__footer">
-          <p className="price__disclaimer">
-            <span className="mono">Демо</span>
-            Цены демонстрационные и зависят от класса, размера и состояния автомобиля.
+          <p className="price__note">
+            Цена с пометкой «от» — минимальная. Итоговую стоимость уточняйте у администратора.
           </p>
-          <Button href="#booking" variant="ghost">Уточнить стоимость</Button>
+          <Button href="#booking" variant="ghost">Перейти к записи</Button>
         </Reveal>
       </div>
     </section>

@@ -86,7 +86,7 @@ export default function Lightbox({ index, onChange }) {
                 src={photoUrl(item.id, 1600)}
                 srcSet={photoSrcSet(item.id)}
                 sizes="92vw"
-                alt={item.title}
+                alt={item.alt}
                 custom={dir}
                 variants={slide}
                 initial="enter"
@@ -106,10 +106,7 @@ export default function Lightbox({ index, onChange }) {
           </div>
 
           <div className="lb__bottom container">
-            <div className="lb__caption">
-              <span className="mono">{item.tag}</span>
-              <span>{item.title}</span>
-            </div>
+            <span className="lb__caption">{item.alt}</span>
             <div className="lb__nav">
               <button type="button" className="lb__btn" onClick={() => go(-1)} aria-label="Предыдущее фото">
                 <ArrowLeft />
